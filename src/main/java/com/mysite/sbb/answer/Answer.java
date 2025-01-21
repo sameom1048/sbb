@@ -21,6 +21,8 @@ public class Answer {
 
     private LocalDateTime createDate;
 
+    private LocalDateTime modifyDate;
+
     @ManyToOne
     @JoinColumn(name = "question_id")
     private Question question;
