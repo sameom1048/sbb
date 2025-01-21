@@ -2,8 +2,10 @@ package com.mysite.sbb;
 
 import com.mysite.sbb.answer.Answer;
 import com.mysite.sbb.answer.AnswerRepository;
+import com.mysite.sbb.answer.AnswerService;
 import com.mysite.sbb.question.Question;
 import com.mysite.sbb.question.QuestionRepository;
+import com.mysite.sbb.question.QuestionService;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -18,22 +20,18 @@ import java.util.Optional;
 class SbbApplicationTests {
 
     @Autowired
-    private QuestionRepository questionRepository;
+    private QuestionService questionService;
 
     @Autowired
-    private AnswerRepository answerRepository;
+    private AnswerService answerService;
 
-    @Transactional
     @Test
     void testJpa() {
-        Optional<Question> oq = this.questionRepository.findById(2);
-        assertTrue(oq.isPresent());
-        Question q = oq.get();
-
-        List<Answer> answerList = q.getAnswerList();
-
-        assertEquals(1, answerList.size());
-        assertEquals("네 자동으로 생성됩니다.", answerList.get(0).getContent());
+        for (int i = 0; i < 100; i++) {
+            String subject = String.format("test data:[%03d]", i);
+            String content = "empty";
+            this.questionService.create(subject, content);
+        }
     }
 
 }
